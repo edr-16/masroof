@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مصروف | MASROOF</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f7;
+  color: #14243a;
+}
+header {
+  background: #14243a;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+header h1 { margin: 0; font-size: 30px; }
+header p { color: #e7c77b; }
+main { padding: 18px; max-width: 500px; margin: auto; }
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  font-size: 17px;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  background: #c5a45b;
+  border: 0;
+  border-radius: 9px;
+  font-size: 17px;
+}
+.result {
+  font-size: 28px;
+  color: #14243a;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>مصروف MASROOF</h1>
+<p>كل ريال له خطة.</p>
+</header>
+
+<main>
+<div class="card">
+<h2>راتبي الشهري</h2>
+<input id="salary" type="number" placeholder="أدخل راتبك">
+<h2>التزاماتي</h2>
+<input id="bills" type="number" placeholder="أدخل مجموع الالتزامات">
+<button onclick="calculate()">احسب المتبقي</button>
+</div>
+
+<div class="card">
+<h2>المبلغ المتبقي</h2>
+<div class="result" id="result">0 ريال</div>
+</div>
+</main>
+
+<script>
+function calculate() {
+ let salary = Number(document.getElementById("salary").value);
+ let bills = Number(document.getElementById("bills").value);
+ let remaining = salary - bills;
+ document.getElementById("result").innerText =
+ remaining.toLocaleString("ar-SA") + " ريال";
+}
+</script>
+
+</body>
+</html>
