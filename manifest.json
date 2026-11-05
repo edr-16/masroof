@@ -9,11 +9,12 @@
   "background_color": "#ffffff",
   "theme_color": "#17243b",
   "description": "كل ريال له خطة.",
-"icons": [
-  {
-    "src": "./icon.png.PNG",
-    "sizes": "any",
-    "type": "image/png"
-  }
-]
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
