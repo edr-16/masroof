@@ -197,5 +197,48 @@ $("salary").addEventListener("input",()=>{save();update();});
 $("bills").addEventListener("input",()=>{save();update();});
 update();
 </script>
+<nav class="bottom-nav">
+  <a href="masroof-new.html">⌂
+    <span>الرئيسية</span>
+  </a>
+
+  <a href="#expenseList">＋
+    <span>المصروفات</span>
+  </a>
+
+  <a href="analysis.html">▥
+    <span>التحليل</span>
+  </a>
+</nav>
+
+<style>
+.bottom-nav {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  background: #17243b;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 5px;
+  box-shadow: 0 4px 20px #0002;
+  z-index: 999;
+}
+
+.bottom-nav a {
+  color: #d6b477;
+  text-decoration: none;
+  text-align: center;
+  font-size: 23px;
+  flex: 1;
+}
+
+.bottom-nav span {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+</style>
 </body>
 </html>
