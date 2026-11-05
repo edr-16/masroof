@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#17243b"/>
+  <rect x="65" y="65" width="382" height="382" rx="75" fill="none" stroke="#c9a34a" stroke-width="5"/>
+  <path d="M115 205 Q115 165 160 165 H355 Q395 165 395 210 V340 Q395 375 360 375 H155 Q115 375 115 335 Z" fill="#202f49" stroke="#d5b15e" stroke-width="12"/>
+  <path d="M115 225 H350 Q390 225 390 260 V305 H310 Q270 305 270 265 Q270 225 310 225" fill="#17243b" stroke="#d5b15e" stroke-width="10"/>
+  <circle cx="315" cy="265" r="12" fill="#e7c36d"/>
+  <path d="M165 150 L210 115 L250 145 L295 105" fill="none" stroke="#e7c36d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285 105 H295 V135" fill="none" stroke="#e7c36d" stroke-width="12" stroke-linecap="round"/>
+  <text x="256" y="425" text-anchor="middle" font-size="43" font-weight="bold" fill="#e7c36d">مصروف</text>
+</svg>
