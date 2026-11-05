@@ -52,7 +52,7 @@ const monthlyExpenses = JSON.parse(localStorage.getItem('masroof_expenses') || '
 const total=monthlyExpenses.reduce((s,e)=>s+(Number(e.amount)||0),0);
 const groups={};
 
-expenses.forEach(e=>{
+monthlyExpenses.forEach(e=>{
 const name=e.category||"أخرى";
 groups[name]=(groups[name]||0)+(Number(e.amount)||0);
 });
@@ -61,11 +61,10 @@ document.getElementById("total").textContent=
 total.toLocaleString("ar-SA")+" ريال";
 
 document.getElementById("count").textContent=
-"عدد العمليات: "+expenses.length;
+"عدد العمليات: "+monthlyExpenses.length;
 
 document.getElementById("average").textContent=
-"متوسط المصروف: "+(expenses.length?Math.round(total/expenses.length):0).toLocaleString("ar-SA")+" ريال";
-
+"متوسط المصروف: "+(monthlyExpenses.length?Math.round(total/monthlyExpenses.length):0).toLocaleString("ar-SA")+" ريال";
 const container=document.getElementById("categories");
 const sorted=Object.entries(groups).sort((a,b)=>b[1]-a[1]);
 
@@ -111,12 +110,11 @@ const monthInput = document.getElementById('reportMonth');
 const totalBox = document.getElementById('monthlyTotal');
 const detailsBox = document.getElementById('monthlyDetails');
 
-const expenses = JSON.parse(localStorage.getItem('masroof_expenses') || '[]');
+const expenses = monthlyExpenses;
 
 const now = new Date();
 monthInput.addEventListener('change',() => {
  showMonthlyReport();
- compareMonths();
  compareMonths();
 });
 
