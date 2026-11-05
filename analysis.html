@@ -117,7 +117,7 @@ monthInput.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2
 
 function showMonthlyReport() {
  const month = monthInput.value;
- const filtered = expenses.filter(item => {
+ const filtered = monthlyExpenses.filter(item => {
   const d = new Date(item.date);
   return !isNaN(d) && d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') === month;
  });
