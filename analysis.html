@@ -103,6 +103,7 @@ container.appendChild(item);
 <h3>إجمالي المصروفات</h3>
 <h2 id="monthlyTotal">0 ريال</h2>
 <div id="monthlyDetails"></div>
+ <div id="monthlyComparison"></div>
 </div>
 
 <script>
@@ -113,7 +114,11 @@ const detailsBox = document.getElementById('monthlyDetails');
 const expenses = JSON.parse(localStorage.getItem('masroof_expenses') || '[]');
 
 const now = new Date();
-monthInput.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+monthInput.addEventListener('change',() => {
+ showMonthlyReport();
+ compareMonths();
+ compareMonths();
+});
 
 function showMonthlyReport() {
  const month = monthInput.value;
@@ -134,6 +139,33 @@ function showMonthlyReport() {
 }
 monthInput.addEventListener('change',showMonthlyReport);
 showMonthlyReport();
+function compareMonths() {
+ const current = monthInput.value;
+ const parts = current.split('-').map(Number);
+ const previousDate = new Date(parts[0], parts[1] - 2, 1);
+ const previous = previousDate.getFullYear() + '-' + String(previousDate.getMonth()+1).padStart(2,'0');
+
+ function sumMonth(month) {
+  return monthlyExpenses
+   .filter(item => {
+    const d = new Date(item.date);
+    return !isNaN(d) && d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') === month;
+   })
+   .reduce((sum,item) => sum + Number(item.amount || 0),0);
+ }
+
+ const currentTotal = sumMonth(current);
+ const previousTotal = sumMonth(previous);
+ const difference = currentTotal - previousTotal;
+ const percent = previousTotal > 0 ? (difference / previousTotal * 100).toFixed(1) : null;
+
+ document.getElementById('monthlyComparison').innerHTML =
+  '<h3>مقارنة الشهر السابق</h3>' +
+  '<p>الشهر الحالي: ' + currentTotal.toFixed(2) + ' ريال</p>' +
+  '<p>الشهر السابق: ' + previousTotal.toFixed(2) + ' ريال</p>' +
+  '<p>' + (difference > 0 ? 'زيادة: ' : difference < 0 ? 'انخفاض: ' : 'لا تغيير: ') + Math.abs(difference).toFixed(2) + ' ريال</p>' +
+  '<p>' + (percent === null ? 'لا توجد بيانات للشهر السابق لحساب النسبة.' : (difference > 0 ? 'زيادة ' : difference < 0 ? 'انخفاض ' : '') + Math.abs(Number(percent)) + '%') + '</p>';
+}
 </script>
 </body>
 </html>
