@@ -1,86 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مصروف | MASROOF</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f5f7;
-  color: #14243a;
-}
-header {
-  background: #14243a;
-  color: white;
-  padding: 30px 20px;
-  text-align: center;
-}
-header h1 { margin: 0; font-size: 30px; }
-header p { color: #e7c77b; }
-main { padding: 18px; max-width: 500px; margin: auto; }
-.card {
-  background: white;
-  padding: 20px;
-  margin-bottom: 15px;
-  border-radius: 15px;
-}
-input {
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 9px;
-  font-size: 17px;
-}
-button {
-  width: 100%;
-  padding: 14px;
-  background: #c5a45b;
-  border: 0;
-  border-radius: 9px;
-  font-size: 17px;
-}
-.result {
-  font-size: 28px;
-  color: #14243a;
-  font-weight: bold;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f4f0;color:#17243b;font-family:Arial,sans-serif;padding:22px}
+header{text-align:center;padding:25px 0}
+h1{color:#b18a48;font-size:34px;margin:0}
+header p{color:#687386}
+.card{background:white;padding:20px;border-radius:16px;margin:15px 0;box-shadow:0 3px 14px #0000000c}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+input{width:100%;padding:14px;border:1px solid #ddd;border-radius:9px;font-size:17px}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:#17243b;color:white;font-size:17px;margin-top:18px}
+#result{font-size:25px;color:#b18a48;font-weight:bold;text-align:center;margin-top:20px}
+small{color:#777}
 </style>
 </head>
 <body>
-
 <header>
-<h1>مصروف MASROOF</h1>
-<p>كل ريال له خطة.</p>
+<h1>مصروف</h1>
+<p>MASROOF — كل ريال له خطة.</p>
 </header>
-
-<main>
 <div class="card">
-<h2>راتبي الشهري</h2>
-<input id="salary" type="number" placeholder="أدخل راتبك">
-<h2>التزاماتي</h2>
-<input id="bills" type="number" placeholder="أدخل مجموع الالتزامات">
+<h2>احسب راتبك</h2>
+<label>الراتب الشهري (ريال)</label>
+<input id="salary" type="number" placeholder="مثلاً 5000">
+<label>الالتزامات الشهرية (ريال)</label>
+<input id="bills" type="number" placeholder="مثلاً 1500">
 <button onclick="calculate()">احسب المتبقي</button>
+<div id="result">المتبقي: 0 ريال</div>
 </div>
-
 <div class="card">
-<h2>المبلغ المتبقي</h2>
-<div class="result" id="result">0 ريال</div>
+<h3>حفظ تلقائي</h3>
+<small>يتم حفظ الراتب والالتزامات على هذا الجهاز تلقائياً.</small>
 </div>
-</main>
-
 <script>
-function calculate() {
- let salary = Number(document.getElementById("salary").value);
- let bills = Number(document.getElementById("bills").value);
- let remaining = salary - bills;
- document.getElementById("result").innerText =
- remaining.toLocaleString("ar-SA") + " ريال";
-}
-</script>
+const salary=document.getElementById("salary");
+const bills=document.getElementById("bills");
+const result=document.getElementById("result");
 
+salary.value=localStorage.getItem("masroof_salary")||"";
+bills.value=localStorage.getItem("masroof_bills")||"";
+
+salary.addEventListener("input",()=>{
+localStorage.setItem("masroof_salary",salary.value);
+calculate();
+});
+bills.addEventListener("input",()=>{
+localStorage.setItem("masroof_bills",bills.value);
+calculate();
+});
+
+function calculate(){
+const s=Number(salary.value)||0;
+const b=Number(bills.value)||0;
+result.textContent="المتبقي: "+(s-b).toLocaleString("ar-SA")+" ريال";
+}
+calculate();
+</script>
 </body>
 </html>
