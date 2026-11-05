@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مصروف | MASROOF</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f5f4f0;color:#17243b;font-family:Arial,sans-serif}
+header{text-align:center;padding:20px}
+h1{font-size:36px;color:#b18a48;margin:0}
+header p{color:#687386}
+.card{background:white;padding:18px;border-radius:16px;margin:16px 0;box-shadow:0 3px 14px #0000000c}
+label{display:block;font-weight:bold;margin:13px 0 7px}
+input,select{width:100%;padding:13px;border:1px solid #ddd;border-radius:9px;font-size:16px;background:white}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#17243b;color:white;font-size:16px;margin-top:14px}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f7f4ed;padding:14px;border-radius:12px;text-align:center}
+.stat strong{display:block;font-size:21px;color:#b18a48;margin-top:8px}
+small{color:#777}
+ul{padding-right:20px}
+li{padding:9px 0;border-bottom:1px solid #eee}
+.delete{width:auto;padding:7px 12px;margin:0 8px;background:#a33}
+</style>
+</head>
+<body>
+<header>
+<h1>مصروف</h1>
+<p>MASROOF — كل ريال له خطة.</p>
+</header>
+
+<div class="card">
+<h2>ملخص راتبك</h2>
+<label>الراتب الشهري (ريال)</label>
+<input id="salary" type="number" min="0" placeholder="مثلاً 5000">
+<label>الالتزامات الشهرية (ريال)</label>
+<input id="bills" type="number" min="0" placeholder="مثلاً 1500">
+<div class="summary">
+<div class="stat">الراتب<strong id="salaryView">0</strong></div>
+<div class="stat">الالتزامات<strong id="billsView">0</strong></div>
+<div class="stat">مصروفاتك<strong id="spentView">0</strong></div>
+<div class="stat">المتبقي<strong id="remaining">0</strong></div>
+</div>
+</div>
+
+<div class="card">
+<h2>إضافة مصروف يومي</h2>
+<label>اسم المصروف</label>
+<input id="expenseName" placeholder="مثلاً: قهوة">
+<label>المبلغ (ريال)</label>
+<input id="expenseAmount" type="number" min="0" placeholder="مثلاً: 15">
+<label>التصنيف</label>
+<select id="category">
+<option>طعام ومشروبات</option>
+<option>مواصلات وبنزين</option>
+<option>تسوق</option>
+<option>فواتير</option>
+<option>صحة</option>
+<option>أخرى</option>
+</select>
+<button onclick="addExpense()">إضافة المصروف</button>
+</div>
+
+<div class="card">
+<h2>سجل المصروفات</h2>
+<ul id="expenseList"></ul>
+<small>يتم حفظ البيانات تلقائياً على هذا الجهاز والمتصفح.</small>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let expenses=JSON.parse(localStorage.getItem("masroof_expenses")||"[]");
+
+$("salary").value=localStorage.getItem("masroof_salary")||"";
+$("bills").value=localStorage.getItem("masroof_bills")||"";
+
+function save(){
+localStorage.setItem("masroof_salary",$("salary").value);
+localStorage.setItem("masroof_bills",$("bills").value);
+localStorage.setItem("masroof_expenses",JSON.stringify(expenses));
+}
+
+function money(n){
+return n.toLocaleString("ar-SA",{maximumFractionDigits:2})+" ريال";
+}
+
+function update(){
+const salary=Number($("salary").value)||0;
+const bills=Number($("bills").value)||0;
+const spent=expenses.reduce((sum,e)=>sum+e.amount,0);
+$("salaryView").textContent=money(salary);
+$("billsView").textContent=money(bills);
+$("spentView").textContent=money(spent);
+$("remaining").textContent=money(salary-bills-spent);
+$("expenseList").innerHTML="";
+expenses.forEach((e,i)=>{
+const li=document.createElement("li");
+li.textContent=e.name+" — "+money(e.amount)+" ("+e.category+") ";
+const btn=document.createElement("button");
+btn.textContent="حذف";
+btn.className="delete";
+btn.onclick=()=>{expenses.splice(i,1);save();update();};
+li.appendChild(btn);
+$("expenseList").appendChild(li);
+});
+if(expenses.length===0){
+$("expenseList").textContent="لا توجد مصروفات مسجلة بعد.";
+}
+}
+
+function addExpense(){
+const name=$("expenseName").value.trim();
+const amount=Number($("expenseAmount").value);
+if(!name||!Number.isFinite(amount)||amount<=0){
+alert("أدخل اسم المصروف ومبلغاً صحيحاً أكبر من صفر");
+return;
+}
+expenses.push({
+name,
+amount,
+category:$("category").value,
+date:new Date().toISOString()
+});
+$("expenseName").value="";
+$("expenseAmount").value="";
+save();
+update();
+}
+
+$("salary").addEventListener("input",()=>{save();update();});
+$("bills").addEventListener("input",()=>{save();update();});
+update();
+</script>
+</body>
+</html>
