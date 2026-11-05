@@ -96,5 +96,44 @@ container.appendChild(item);
 });
 }
 </script>
+<div class="card">
+<h2>التقرير الشهري</h2>
+<p>اختر الشهر لمعرفة مصروفاتك.</p>
+<input type="month" id="reportMonth">
+<h3>إجمالي المصروفات</h3>
+<h2 id="monthlyTotal">0 ريال</h2>
+<div id="monthlyDetails"></div>
+</div>
+
+<script>
+const monthInput = document.getElementById('reportMonth');
+const totalBox = document.getElementById('monthlyTotal');
+const detailsBox = document.getElementById('monthlyDetails');
+
+const expenses = JSON.parse(localStorage.getItem('masroof_expenses') || '[]');
+
+const now = new Date();
+monthInput.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+
+function showMonthlyReport() {
+ const month = monthInput.value;
+ const filtered = expenses.filter(item => {
+  const d = new Date(item.date);
+  return !isNaN(d) && d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') === month;
+ });
+ const total = filtered.reduce((sum,item) => sum + Number(item.amount || 0),0);
+ totalBox.textContent = total.toFixed(2) + ' ريال';
+ const categories = {};
+ filtered.forEach(item => {
+  const name = item.category || 'أخرى';
+  categories[name] = (categories[name] || 0) + Number(item.amount || 0);
+ });
+ detailsBox.innerHTML = filtered.length
+  ? Object.entries(categories).map(([name,value]) => '<p>' + name + ': ' + value.toFixed(2) + ' ريال</p>').join('')
+  : '<p>لا توجد مصروفات مسجلة لهذا الشهر.</p>';
+}
+monthInput.addEventListener('change',showMonthlyReport);
+showMonthlyReport();
+</script>
 </body>
 </html>
