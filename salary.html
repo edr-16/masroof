@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17243b">
+  <title>الراتب والالتزامات | مصروف</title>
+  <link rel="manifest" href="./manifest.json">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #17243b;
+    }
+    header {
+      background: #17243b;
+      color: #e7c36d;
+      text-align: center;
+      padding: 22px;
+      border-radius: 15px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin-top: 18px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px #00000010;
+    }
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+    input {
+      border: 1px solid #ddd;
+    }
+    button {
+      background: #17243b;
+      color: #e7c36d;
+      border: none;
+      font-weight: bold;
+    }
+    nav {
+      display: flex;
+      gap: 7px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      flex: 1;
+      min-width: 75px;
+      text-align: center;
+      text-decoration: none;
+      background: #17243b;
+      color: #e7c36d;
+      padding: 12px 5px;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+    #message {
+      color: #18794e;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>مصروف</h2>
+  <p>الراتب والالتزامات</p>
+</header>
+
+<div class="card">
+  <h3>الراتب الشهري</h3>
+  <input id="salary" type="number" min="0" placeholder="أدخل الراتب الشهري">
+</div>
+
+<div class="card">
+  <h3>الالتزامات الشهرية</h3>
+  <input id="bills" type="number" min="0" placeholder="أدخل مجموع الالتزامات">
+  <button onclick="saveData()">حفظ البيانات</button>
+  <p id="message"></p>
+</div>
+
+<nav>
+  <a href="./masroof-new.html">الرئيسية</a>
+  <a href="./salary.html">الراتب</a>
+  <a href="./add-expense.html">إضافة مصروف</a>
+  <a href="./expenses.html">السجل</a>
+  <a href="./analysis.html">التحليل</a>
+</nav>
+
+<script>
+  const salaryInput = document.getElementById("salary");
+  const billsInput = document.getElementById("bills");
+
+  salaryInput.value = localStorage.getItem("masroof_salary") || "";
+  billsInput.value = localStorage.getItem("masroof_bills") || "";
+
+  function saveData() {
+    const salary = Number(salaryInput.value);
+    const bills = Number(billsInput.value);
+
+    if (salary < 0 || bills < 0 ||
+        salaryInput.value === "" || billsInput.value === "") {
+      document.getElementById("message").textContent =
+        "يرجى إدخال مبالغ صحيحة";
+      return;
+    }
+
+    localStorage.setItem("masroof_salary", salary);
+    localStorage.setItem("masroof_bills", bills);
+
+    document.getElementById("message").textContent =
+      "تم حفظ البيانات بنجاح";
+  }
+</script>
+
+</body>
+</html>
