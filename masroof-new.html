@@ -123,6 +123,7 @@ return;
 expenses.push({
 name,
 amount,
+  date: new Date().toISOString(),
 category:$("category").value,
 date:new Date().toISOString()
 });
