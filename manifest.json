@@ -11,7 +11,7 @@
   "description": "كل ريال له خطة.",
 "icons": [
   {
-    "src": "./icon.png",
+    "src": "./icon.png.PNG",
     "sizes": "any",
     "type": "image/png"
   }
