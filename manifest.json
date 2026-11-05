@@ -1,0 +1,12 @@
+{
+  "name": "مصروف | MASROOF",
+  "short_name": "مصروف",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./masroof-new.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#17243b",
+  "description": "كل ريال له خطة."
+}
