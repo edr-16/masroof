@@ -49,7 +49,7 @@ small{color:#777}
 
 <script>
 const monthlyExpenses = JSON.parse(localStorage.getItem('masroof_expenses') || '[]');
-const total=expenses.reduce((s,e)=>s+(Number(e.amount)||0),0);
+const total=monthlyExpenses.reduce((s,e)=>s+(Number(e.amount)||0),0);
 const groups={};
 
 expenses.forEach(e=>{
